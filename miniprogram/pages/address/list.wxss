@@ -1,0 +1,69 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.content {
+  flex: 1;
+  padding: 24rpx;
+}
+
+.addr-card {
+  margin-bottom: 24rpx;
+}
+
+.addr-main {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  margin-bottom: 10rpx;
+}
+
+.addr-name {
+  font-size: 32rpx;
+  font-weight: 600;
+}
+
+.tag-default {
+  background: #ecfdf5;
+  border-color: #a7f3d0;
+  color: #047857;
+}
+
+.addr-detail {
+  font-size: 26rpx;
+}
+
+.addr-ops {
+  display: flex;
+  justify-content: flex-end;
+  gap: 32rpx;
+  margin-top: 16rpx;
+  padding-top: 16rpx;
+  border-top: 1rpx solid #f3f4f6;
+}
+
+.op {
+  font-size: 26rpx;
+  font-weight: 500;
+  color: #2563eb;
+}
+
+.op-danger {
+  color: #ef4444;
+}
+
+.bottom-space {
+  height: 40rpx;
+}
+
+.footer {
+  background: #ffffff;
+  padding: 20rpx 24rpx calc(20rpx + env(safe-area-inset-bottom));
+  border-top: 1rpx solid #e5e7eb;
+}
+
+.add-btn {
+  width: 100%;
+}

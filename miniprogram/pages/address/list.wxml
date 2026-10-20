@@ -1,0 +1,27 @@
+<view class="page">
+  <scroll-view scroll-y class="content">
+    <view wx:for="{{list}}" wx:key="id" class="card addr-card" data-item="{{item}}" bindtap="onTapAddress">
+      <view class="addr-main">
+        <text class="addr-name">{{item.consignee}}</text>
+        <text class="addr-phone text-sub">{{item.phone}}</text>
+        <text wx:if="{{item.label}}" class="tag">{{item.label}}</text>
+        <text wx:if="{{item.isDefault === 1}}" class="tag tag-default">默认</text>
+      </view>
+      <view class="addr-detail text-sub">{{item.provinceName}}{{item.cityName}}{{item.districtName}}{{item.detail}}</view>
+      <view class="addr-ops">
+        <text wx:if="{{item.isDefault !== 1}}" class="op" data-item="{{item}}" catchtap="onSetDefault">设为默认</text>
+        <text class="op" data-item="{{item}}" catchtap="onEdit">编辑</text>
+        <text class="op op-danger" data-item="{{item}}" catchtap="onDelete">删除</text>
+      </view>
+    </view>
+
+    <view wx:if="{{!list.length}}" class="empty">
+      <view>还没有收货地址</view>
+    </view>
+    <view class="bottom-space"></view>
+  </scroll-view>
+
+  <view class="footer">
+    <view class="btn-primary add-btn" bindtap="onAdd">+ 新增地址</view>
+  </view>
+</view>

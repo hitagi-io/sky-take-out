@@ -1,0 +1,101 @@
+<view class="page" wx:if="{{order}}">
+  <scroll-view scroll-y class="content">
+    <!-- 状态 -->
+    <view class="status-banner s{{order.status}}">
+      <view class="status-text">{{statusText}}</view>
+      <view class="status-sub" wx:if="{{order.status === 1}}">请尽快完成支付，超时订单将自动取消</view>
+      <view class="status-sub" wx:if="{{order.status === 2}}">商家正在确认订单</view>
+      <view class="status-sub" wx:if="{{order.status === 3}}">商家已接单，正在备餐</view>
+      <view class="status-sub" wx:if="{{order.status === 4}}">骑手正在配送中</view>
+      <view class="status-sub" wx:if="{{order.status === 5}}">感谢惠顾，欢迎再次光临</view>
+      <view class="status-sub" wx:if="{{order.status === 6}}">订单已取消，欢迎再次选购</view>
+    </view>
+
+    <!-- 配送信息 -->
+    <view class="card">
+      <view class="card-title">配送信息</view>
+      <view class="info-row">
+        <text class="info-label">收货人</text>
+        <text>{{order.consignee}} {{order.phone}}</text>
+      </view>
+      <view class="info-row">
+        <text class="info-label">地址</text>
+        <text class="info-addr">{{order.address}}</text>
+      </view>
+      <view class="info-row" wx:if="{{order.estimatedDeliveryTime}}">
+        <text class="info-label">预计送达</text>
+        <text>{{order.estimatedDeliveryTime}}</text>
+      </view>
+      <view class="info-row" wx:if="{{order.deliveryTime}}">
+        <text class="info-label">送达时间</text>
+        <text>{{order.deliveryTime}}</text>
+      </view>
+    </view>
+
+    <!-- 商品 -->
+    <view class="card">
+      <view class="card-title">商品明细</view>
+      <view wx:for="{{order.orderDetailList}}" wx:key="id" class="goods-item">
+        <image class="goods-img" src="{{item.image}}" mode="aspectFill" />
+        <view class="goods-info">
+          <view class="goods-name">{{item.name}}</view>
+          <view wx:if="{{item.flavorText}}" class="text-muted goods-flavor">{{item.flavorText}}</view>
+        </view>
+        <text class="text-sub">x{{item.number}}</text>
+        <text class="goods-price">¥{{item.amount}}</text>
+      </view>
+      <view class="amount-row" wx:if="{{order.packAmount}}">
+        <text class="text-sub">打包费</text>
+        <text>¥{{order.packAmount}}</text>
+      </view>
+      <view class="amount-row total">
+        <text>合计</text>
+        <text class="price total-price">¥{{order.amount}}</text>
+      </view>
+    </view>
+
+    <!-- 订单信息 -->
+    <view class="card">
+      <view class="card-title">订单信息</view>
+      <view class="info-row" bindtap="copyNumber">
+        <text class="info-label">订单号</text>
+        <text>{{order.number}} <text class="copy">复制</text></text>
+      </view>
+      <view class="info-row">
+        <text class="info-label">下单时间</text>
+        <text>{{order.orderTime}}</text>
+      </view>
+      <view class="info-row" wx:if="{{order.checkoutTime}}">
+        <text class="info-label">支付时间</text>
+        <text>{{order.checkoutTime}}</text>
+      </view>
+      <view class="info-row" wx:if="{{order.remark}}">
+        <text class="info-label">备注</text>
+        <text>{{order.remark}}</text>
+      </view>
+      <view class="info-row" wx:if="{{order.tablewareStatus === 0}}">
+        <text class="info-label">餐具</text>
+        <text>{{order.tablewareNumber}} 份</text>
+      </view>
+      <view class="info-row" wx:if="{{order.cancelReason}}">
+        <text class="info-label">取消原因</text>
+        <text>{{order.cancelReason}}</text>
+      </view>
+      <view class="info-row" wx:if="{{order.rejectionReason}}">
+        <text class="info-label">拒单原因</text>
+        <text>{{order.rejectionReason}}</text>
+      </view>
+    </view>
+
+    <view class="bottom-space"></view>
+  </scroll-view>
+
+  <!-- 底部操作 -->
+  <view class="footer">
+    <view wx:if="{{order.status === 1}}" class="btn-ghost" bindtap="onCancel">取消订单</view>
+    <view wx:if="{{order.status === 1}}" class="btn-primary footer-btn" bindtap="onPay">立即支付</view>
+    <view wx:if="{{order.status === 2 || order.status === 3}}" class="btn-ghost" bindtap="onRemind">催单</view>
+    <view wx:if="{{order.status === 2}}" class="btn-ghost" bindtap="onCancel">取消订单</view>
+    <view wx:if="{{order.status !== 1}}" class="btn-ghost" bindtap="onRepetition">再来一单</view>
+  </view>
+</view>

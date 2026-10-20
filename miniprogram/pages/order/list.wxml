@@ -1,0 +1,50 @@
+<view class="page">
+  <!-- 状态筛选 -->
+  <scroll-view scroll-x class="tabs" enhanced show-scrollbar="{{false}}">
+    <view
+      wx:for="{{tabs}}"
+      wx:key="label"
+      class="tab {{activeTab === index ? 'active' : ''}}"
+      data-index="{{index}}"
+      bindtap="onTapTab"
+    >{{item.label}}</view>
+  </scroll-view>
+
+  <scroll-view
+    scroll-y
+    class="list"
+    enhanced
+    show-scrollbar="{{false}}"
+    bindscrolltolower="loadMore"
+    refresher-enabled
+    refresher-triggered="{{refreshing}}"
+    bindrefresherrefresh="onRefresh"
+  >
+    <view wx:for="{{orders}}" wx:key="id" class="card order-card" data-id="{{item.id}}" bindtap="goDetail">
+      <view class="order-head">
+        <view class="order-shop">
+          <image wx:if="{{item.firstImage}}" class="order-img" src="{{item.firstImage}}" mode="aspectFill" />
+          <view class="order-dishes">{{item.orderDishes || '订单 #' + item.number}}</view>
+        </view>
+        <view class="order-status s{{item.status}}">{{item.statusText}}</view>
+      </view>
+      <view class="order-meta">
+        <text class="text-muted">{{item.orderTime}}</text>
+        <text class="price">¥{{item.amount}}</text>
+      </view>
+      <view class="order-actions">
+        <view wx:if="{{item.status === 1}}" class="btn-ghost" catchtap="onCancel" data-order="{{item}}">取消订单</view>
+        <view wx:if="{{item.status === 1}}" class="btn-mini-primary" catchtap="onPay" data-order="{{item}}">去支付</view>
+        <view wx:if="{{item.status === 2 || item.status === 3}}" class="btn-ghost" catchtap="onRemind" data-order="{{item}}">催单</view>
+        <view wx:if="{{item.status !== 1}}" class="btn-ghost" catchtap="onRepetition" data-order="{{item}}">再来一单</view>
+      </view>
+    </view>
+
+    <view wx:if="{{loading && orders.length}}" class="list-loading text-muted">加载中...</view>
+    <view wx:if="{{!orders.length && !loading}}" class="empty">
+      <view>暂无相关订单</view>
+      <view class="btn-primary empty-btn" bindtap="goOrder">去点餐</view>
+    </view>
+    <view wx:if="{{orders.length && !hasMore}}" class="text-muted list-end">已经到底啦</view>
+  </scroll-view>
+</view>

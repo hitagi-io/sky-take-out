@@ -1,0 +1,58 @@
+<view class="page">
+  <!-- 用户信息 -->
+  <view class="user-card">
+    <view class="avatar-static">
+      <view class="avatar avatar-default">
+        <view class="avatar-head"></view>
+        <view class="avatar-body"></view>
+      </view>
+    </view>
+    <view class="user-info" bindtap="onTapLogin">
+      <block wx:if="{{loggedIn}}">
+        <view class="nick-text nick-default">微信用户</view>
+        <view class="user-sub">欢迎回来</view>
+      </block>
+      <block wx:else>
+        <view class="nick-text">点击登录</view>
+        <view class="user-sub">登录后可下单、查看订单</view>
+      </block>
+    </view>
+  </view>
+
+  <!-- 我的订单：原底部“订单”tab 并入此处 -->
+  <view class="card order-card">
+    <view class="section-head">
+      <text class="section-title">我的订单</text>
+      <view class="section-more" data-tab="0" bindtap="goOrders">全部订单 ›</view>
+    </view>
+    <view class="order-grid">
+      <view class="order-item" data-tab="1" bindtap="goOrders">
+        <view class="order-icon">¥</view>
+        <text class="order-label">待付款</text>
+      </view>
+      <view class="order-item" data-tab="2" bindtap="goOrders">
+        <view class="order-icon">→</view>
+        <text class="order-label">进行中</text>
+      </view>
+      <view class="order-item" data-tab="3" bindtap="goOrders">
+        <view class="order-icon">✓</view>
+        <text class="order-label">已完成</text>
+      </view>
+      <view class="order-item" data-tab="4" bindtap="goOrders">
+        <view class="order-icon">×</view>
+        <text class="order-label">已取消</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 功能入口 -->
+  <view class="card menu">
+    <view class="menu-item" bindtap="goAddress">
+      <text class="menu-label">地址管理</text>
+      <text class="menu-arrow">›</text>
+    </view>
+  </view>
+
+  <!-- 退出登录 -->
+  <view wx:if="{{loggedIn}}" class="card logout-card" bindtap="onLogout">退出登录</view>
+</view>

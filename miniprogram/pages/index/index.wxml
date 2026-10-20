@@ -1,0 +1,192 @@
+<view class="page">
+  <!-- 自定义顶部：状态栏占位 + 左上角“我的”入口 + 店铺信息 -->
+  <view class="top">
+    <view style="height: {{statusBarHeight}}px;"></view>
+    <view class="top-nav">
+      <view class="mine-entry" bindtap="goMine" hover-class="mine-entry-hover">
+        <view class="mine-avatar">
+          <view class="mine-avatar-head"></view>
+          <view class="mine-avatar-body"></view>
+        </view>
+        <text class="mine-text">我的</text>
+      </view>
+    </view>
+    <view class="shop-hero">
+      <view class="shop-name">天空外卖</view>
+      <view class="shop-status {{shopStatus === 1 ? 'open' : 'closed'}}">
+        <view class="status-dot"></view>
+        {{shopStatus === 1 ? '营业中' : '休息中'}}
+      </view>
+    </view>
+  </view>
+
+  <view class="body">
+    <!-- 左侧分类 -->
+    <scroll-view scroll-y class="side" enhanced show-scrollbar="{{false}}">
+      <view
+        wx:for="{{categories}}"
+        wx:key="id"
+        class="side-item {{activeCategory && activeCategory.id === item.id && itemType === item.kind ? 'active' : ''}}"
+        data-cat="{{item}}"
+        bindtap="onTapCategory"
+      >
+        {{item.name}}
+      </view>
+      <view wx:if="{{!categories.length && !menuLoading}}" class="side-empty">暂无分类</view>
+    </scroll-view>
+
+    <!-- 右侧商品 -->
+    <scroll-view
+      scroll-y
+      class="main"
+      scroll-top="{{mainScrollTop}}"
+      enhanced
+      show-scrollbar="{{false}}"
+      refresher-enabled
+      refresher-triggered="{{refreshing}}"
+      bindrefresherrefresh="onRefresh"
+    >
+      <view wx:if="{{activeCategory && !loadError}}" class="cat-title">{{activeCategory.name}}</view>
+
+      <!-- 加载失败 -->
+      <view wx:if="{{loadError}}" class="empty">
+        <view>菜单加载失败，请检查网络</view>
+        <view class="btn-ghost retry-btn" bindtap="retry">重新加载</view>
+      </view>
+
+      <block wx:elif="{{itemsLoading}}">
+        <!-- 加载骨架 -->
+        <view wx:for="{{[1, 2, 3, 4]}}" wx:key="*this" class="skeleton-card">
+          <view class="skeleton-img"></view>
+          <view class="skeleton-info">
+            <view class="skeleton-line w60"></view>
+            <view class="skeleton-line w40"></view>
+            <view class="skeleton-line w30"></view>
+          </view>
+        </view>
+      </block>
+
+      <block wx:else>
+        <view wx:for="{{items}}" wx:key="id" class="dish-card">
+          <image class="dish-img" src="{{item.image}}" mode="aspectFill" lazy-load />
+          <view class="dish-info">
+            <view class="dish-name">{{item.name}}</view>
+            <view class="dish-desc">{{item.description || ''}}</view>
+            <view wx:if="{{itemType === 'setmeal'}}" class="setmeal-link" data-item="{{item}}" bindtap="onViewSetmeal">查看套餐明细 ›</view>
+            <view class="dish-foot">
+              <view class="price"><text class="price-symbol">¥</text>{{item.price}}</view>
+              <view class="actions">
+                <block wx:if="{{itemType === 'dish' && item.flavors && item.flavors.length}}">
+                  <view class="btn-spec" data-item="{{item}}" data-kind="dish" bindtap="onAdd">选规格</view>
+                </block>
+                <block wx:else>
+                  <view class="stepper">
+                    <view
+                      wx:if="{{cartMap[item._cartKey]}}"
+                      class="step-btn minus"
+                      data-item="{{item}}"
+                      data-kind="{{itemType}}"
+                      catchtap="onSub"
+                    >−</view>
+                    <text wx:if="{{cartMap[item._cartKey]}}" class="step-num">{{cartMap[item._cartKey]}}</text>
+                    <view class="step-btn plus" data-item="{{item}}" data-kind="{{itemType}}" bindtap="onAdd">+</view>
+                  </view>
+                </block>
+              </view>
+            </view>
+          </view>
+        </view>
+
+        <view wx:if="{{activeCategory && !items.length}}" class="empty">
+          <view>本分类暂时没有商品</view>
+        </view>
+      </block>
+
+      <view class="bottom-space"></view>
+    </scroll-view>
+  </view>
+
+  <!-- 购物车弹层 -->
+  <view wx:if="{{showCart}}" class="mask" bindtap="toggleCart"></view>
+  <view wx:if="{{showCart}}" class="popup cart-popup">
+    <view class="cart-head">
+      <text class="cart-title">购物车</text>
+      <text class="cart-clean" bindtap="onCleanCart">清空</text>
+    </view>
+    <scroll-view scroll-y class="cart-list" enhanced show-scrollbar="{{false}}">
+      <view wx:for="{{cartList}}" wx:key="id" class="cart-item">
+        <image class="cart-img" src="{{item.image}}" mode="aspectFill" />
+        <view class="cart-info">
+          <view class="cart-name">{{item.name}}</view>
+          <view wx:if="{{item.flavorText}}" class="cart-flavor">{{item.flavorText}}</view>
+        </view>
+        <view class="price cart-price">¥{{item.amount}}</view>
+        <view class="stepper">
+          <view class="step-btn minus" data-item="{{item}}" catchtap="onCartSub">−</view>
+          <text class="step-num">{{item.number}}</text>
+          <view class="step-btn plus" data-item="{{item}}" catchtap="onCartAdd">+</view>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- 底部购物车栏 -->
+  <view class="cart-bar">
+    <view class="cart-left" bindtap="toggleCart">
+      <view class="cart-icon {{cartCount ? 'has' : ''}}">
+        <text class="cart-glyph">购</text>
+        <view wx:if="{{cartCount}}" class="badge">{{cartCount}}</view>
+      </view>
+      <view class="cart-total" wx:if="{{cartCount}}"><text class="cart-total-symbol">¥</text>{{cartAmount}}</view>
+      <view class="cart-total empty-text" wx:else>购物车是空的</view>
+    </view>
+    <view class="btn-primary checkout {{!cartCount ? 'disabled' : ''}}" bindtap="goConfirm">去结算</view>
+  </view>
+
+  <!-- 规格选择弹窗（高层级，盖住底部购物车栏） -->
+  <view wx:if="{{flavorDish}}" class="mask high" bindtap="cancelFlavor"></view>
+  <view wx:if="{{flavorDish}}" class="popup high">
+    <view class="popup-title">{{flavorDish.name}}</view>
+    <scroll-view scroll-y class="popup-body" enhanced show-scrollbar="{{false}}">
+      <view wx:for="{{flavorDish.flavors}}" wx:for-item="flavor" wx:key="name" class="flavor-group">
+        <view class="flavor-name">{{flavor.name}}</view>
+        <view class="flavor-values">
+          <view
+            wx:for="{{flavor.value}}"
+            wx:for-item="val"
+            wx:key="*this"
+            class="flavor-val {{flavorSelections[index] === val ? 'selected' : ''}}"
+            data-index="{{index}}"
+            data-value="{{val}}"
+            bindtap="onSelectFlavor"
+          >{{val}}</view>
+        </view>
+      </view>
+    </scroll-view>
+    <view class="popup-foot">
+      <view class="price popup-price">¥{{flavorDish.price}}</view>
+      <view class="btn-primary popup-btn" bindtap="confirmFlavor">加入购物车</view>
+    </view>
+  </view>
+
+  <!-- 套餐明细弹窗（高层级，盖住底部购物车栏） -->
+  <view wx:if="{{setmealDetail}}" class="mask high" bindtap="closeSetmeal"></view>
+  <view wx:if="{{setmealDetail}}" class="popup high">
+    <view class="popup-title">{{setmealDetail.name}}</view>
+    <scroll-view scroll-y class="popup-body" enhanced show-scrollbar="{{false}}">
+      <view wx:for="{{setmealDishes}}" wx:key="name" class="setmeal-dish">
+        <image class="setmeal-dish-img" src="{{item.image}}" mode="aspectFill" />
+        <view class="setmeal-dish-info">
+          <view class="dish-name">{{item.name}}</view>
+          <view class="dish-desc">{{item.description || ''}}</view>
+        </view>
+        <text class="text-sub">x{{item.copies}}</text>
+      </view>
+      <view wx:if="{{!setmealDishes.length}}" class="text-muted" style="text-align:center;padding:40rpx 0;">暂无明细</view>
+    </scroll-view>
+    <view class="popup-foot">
+      <view class="price popup-price">¥{{setmealDetail.price}}</view>
+      <view class="btn-primary popup-btn" bindtap="addSetmealFromPopup">加入购物车</view>
+    </view>
+  </view>
+</view>

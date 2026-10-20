@@ -1,0 +1,82 @@
+<view class="page">
+  <scroll-view scroll-y class="content">
+    <!-- 收货地址 -->
+    <view class="card addr-card" bindtap="goAddressList">
+      <block wx:if="{{address}}">
+        <view class="addr-main">
+          <text class="addr-name">{{address.consignee}}</text>
+          <text class="addr-phone">{{address.phone}}</text>
+          <text wx:if="{{address.isDefault === 1}}" class="tag">默认</text>
+        </view>
+        <view class="addr-detail text-sub">{{address.provinceName}}{{address.cityName}}{{address.districtName}}{{address.detail}}</view>
+      </block>
+      <view wx:else class="addr-empty">请选择收货地址</view>
+      <text class="addr-arrow">›</text>
+    </view>
+
+    <!-- 商品清单 -->
+    <view class="card">
+      <view class="card-title">商品清单</view>
+      <view wx:for="{{cartList}}" wx:key="id" class="goods-item">
+        <image class="goods-img" src="{{item.image}}" mode="aspectFill" />
+        <view class="goods-info">
+          <view class="goods-name">{{item.name}}</view>
+          <view wx:if="{{item.flavorText}}" class="text-muted goods-flavor">{{item.flavorText}}</view>
+        </view>
+        <text class="text-sub">x{{item.number}}</text>
+        <text class="price goods-price">¥{{item.amount}}</text>
+      </view>
+      <view wx:if="{{!cartList.length}}" class="text-muted" style="padding: 30rpx 0; text-align: center;">购物车是空的</view>
+    </view>
+
+    <!-- 餐具 -->
+    <view class="card">
+      <view class="row">
+        <text class="row-label">餐具数量</text>
+        <view class="row-opts">
+          <view class="opt {{tablewareStatus === 1 ? 'on' : ''}}" data-mode="1" bindtap="onTablewareMode">按餐量提供</view>
+          <view class="opt {{tablewareStatus === 0 ? 'on' : ''}}" data-mode="0" bindtap="onTablewareMode">选择数量</view>
+        </view>
+      </view>
+      <view wx:if="{{tablewareStatus === 0}}" class="row">
+        <text class="row-label">需要几份</text>
+        <picker range="{{[1,2,3,4,5,6,7,8,9,10]}}" bindchange="onTablewareNum">
+          <view class="picker-val">{{tablewareNumber}} 份 ›</view>
+        </picker>
+      </view>
+    </view>
+
+    <!-- 备注 -->
+    <view class="card">
+      <view class="row">
+        <text class="row-label">备注</text>
+        <input class="remark-input" placeholder="口味偏好、配送要求等" placeholder-class="ph" value="{{remark}}" bindinput="onInputRemark" maxlength="50" />
+      </view>
+    </view>
+  </scroll-view>
+
+  <!-- 底部结算栏 -->
+  <view class="footer">
+    <view class="footer-amount">
+      <text class="footer-label">合计</text>
+      <text class="price footer-price">¥{{totalAmount}}</text>
+    </view>
+    <view class="btn-primary submit-btn {{submitting ? 'disabled' : ''}}" bindtap="onSubmit">
+      {{submitting ? '提交中...' : '提交订单'}}
+    </view>
+  </view>
+
+  <!-- 支付弹窗 -->
+  <view wx:if="{{payOrder}}" class="mask"></view>
+  <view wx:if="{{payOrder}}" class="popup pay-popup">
+    <view class="popup-title">收银台</view>
+    <view class="pay-amount">¥{{payOrder.orderAmount}}</view>
+    <view class="text-muted pay-no">订单号 {{payOrder.orderNumber}}</view>
+    <view class="pay-method">
+      <text>微信支付</text>
+      <text class="pay-check">✓</text>
+    </view>
+    <view class="btn-primary pay-btn" bindtap="onPay">确认支付</view>
+    <view class="pay-cancel" bindtap="onCancelPay">暂不支付</view>
+  </view>
+</view>

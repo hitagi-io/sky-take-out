@@ -1,0 +1,535 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* 自定义顶部 */
+.top {
+  flex-shrink: 0;
+  padding: 0 40rpx 28rpx;
+  background: #ffffff;
+  border-bottom: 1rpx solid #e5e7eb;
+  color: #111827;
+}
+
+.top-nav {
+  height: 88rpx;
+  display: flex;
+  align-items: center;
+  /* 给右上角胶囊按钮留出空间 */
+  padding-right: 190rpx;
+}
+
+.mine-entry {
+  display: flex;
+  align-items: center;
+  padding: 8rpx 24rpx 8rpx 8rpx;
+  border-radius: 999rpx;
+  background: #eff6ff;
+  border: 1rpx solid #dbeafe;
+}
+
+.mine-entry-hover {
+  background: #dbeafe;
+}
+
+.mine-avatar {
+  position: relative;
+  width: 52rpx;
+  height: 52rpx;
+  border-radius: 50%;
+  background: #e5e7eb;
+  overflow: hidden;
+  margin-right: 10rpx;
+  flex-shrink: 0;
+}
+
+.mine-avatar-head {
+  position: absolute;
+  top: 10rpx;
+  left: 50%;
+  width: 18rpx;
+  height: 18rpx;
+  margin-left: -9rpx;
+  border-radius: 50%;
+  background: #9ca3af;
+}
+
+.mine-avatar-body {
+  position: absolute;
+  bottom: 7rpx;
+  left: 50%;
+  width: 30rpx;
+  height: 15rpx;
+  margin-left: -15rpx;
+  border-radius: 15rpx 15rpx 0 0;
+  background: #9ca3af;
+}
+
+.mine-text {
+  font-size: 26rpx;
+  font-weight: 500;
+  color: #1d4ed8;
+}
+
+.shop-hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 8rpx;
+}
+
+.shop-name {
+  color: #111827;
+  font-size: 42rpx;
+  font-weight: 600;
+  letter-spacing: 0.5rpx;
+}
+
+.shop-status {
+  display: flex;
+  align-items: center;
+  margin-left: 20rpx;
+  flex-shrink: 0;
+  font-size: 24rpx;
+  padding: 6rpx 18rpx;
+  border-radius: 8rpx;
+  border: 1rpx solid transparent;
+}
+
+.status-dot {
+  width: 10rpx;
+  height: 10rpx;
+  border-radius: 50%;
+  margin-right: 8rpx;
+  background: currentColor;
+}
+
+.shop-status.open {
+  background: #ecfdf5;
+  border-color: #a7f3d0;
+  color: #047857;
+}
+
+.shop-status.closed {
+  background: #f3f4f6;
+  border-color: #e5e7eb;
+  color: #6b7280;
+}
+
+.body {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+  margin: 24rpx;
+  background: #ffffff;
+  border: 1rpx solid #e5e7eb;
+  border-radius: 32rpx;
+  box-shadow: 0 20rpx 60rpx rgba(15, 23, 42, 0.08);
+}
+
+/* 左侧分类 */
+.side {
+  width: 190rpx;
+  background: #f9fafb;
+  height: 100%;
+  border-right: 1rpx solid #e5e7eb;
+}
+
+.side-item {
+  padding: 32rpx 20rpx;
+  font-size: 26rpx;
+  color: #4b5563;
+  border-left: 6rpx solid transparent;
+}
+
+.side-item.active {
+  background: #ffffff;
+  color: #2563eb;
+  font-weight: 600;
+  border-left-color: #2563eb;
+}
+
+.side-empty {
+  padding: 40rpx 20rpx;
+  color: #9ca3af;
+  font-size: 24rpx;
+}
+
+/* 右侧商品 */
+.main {
+  flex: 1;
+  height: 100%;
+  background: #ffffff;
+  padding: 0 28rpx;
+}
+
+.cat-title {
+  font-size: 30rpx;
+  font-weight: 600;
+  padding: 32rpx 0 16rpx;
+  color: #111827;
+}
+
+.price-symbol {
+  font-size: 24rpx;
+  margin-right: 2rpx;
+}
+
+/* 加载骨架 */
+.skeleton-card {
+  display: flex;
+  padding: 24rpx 0;
+  border-bottom: 1rpx solid #f3f4f6;
+}
+
+.skeleton-img {
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: 16rpx;
+  background: #f1f5f9;
+}
+
+.skeleton-info {
+  flex: 1;
+  margin-left: 20rpx;
+  padding-top: 8rpx;
+}
+
+.skeleton-line {
+  height: 24rpx;
+  border-radius: 8rpx;
+  background: #f1f5f9;
+  margin-bottom: 20rpx;
+}
+
+.skeleton-line.w60 { width: 60%; }
+.skeleton-line.w40 { width: 40%; }
+.skeleton-line.w30 { width: 30%; }
+
+.retry-btn {
+  margin-top: 32rpx;
+}
+
+.dish-card {
+  display: flex;
+  padding: 24rpx 0;
+  border-bottom: 1rpx solid #f3f4f6;
+}
+
+.dish-img {
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: 16rpx;
+  background: #f3f4f6;
+  flex-shrink: 0;
+}
+
+.dish-info {
+  flex: 1;
+  margin-left: 20rpx;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.dish-name {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #111827;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dish-desc {
+  font-size: 24rpx;
+  color: #6b7280;
+  margin-top: 6rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.setmeal-link {
+  font-size: 24rpx;
+  color: #2563eb;
+  margin-top: 6rpx;
+}
+
+.dish-foot {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 12rpx;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+}
+
+.stepper {
+  display: flex;
+  align-items: center;
+}
+
+.step-btn {
+  width: 48rpx;
+  height: 48rpx;
+  border-radius: 12rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32rpx;
+  line-height: 1;
+}
+
+.step-btn.plus {
+  background: #2563eb;
+  color: #ffffff;
+}
+
+.step-btn.minus {
+  border: 2rpx solid #d1d5db;
+  color: #4b5563;
+  background: #ffffff;
+}
+
+.step-num {
+  min-width: 56rpx;
+  text-align: center;
+  font-size: 28rpx;
+  color: #111827;
+}
+
+.btn-spec {
+  background: #2563eb;
+  color: #ffffff;
+  font-size: 24rpx;
+  padding: 8rpx 24rpx;
+  border-radius: 12rpx;
+}
+
+.bottom-space {
+  height: 140rpx;
+}
+
+/* 底部购物车栏 */
+.cart-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20rpx 24rpx calc(20rpx + env(safe-area-inset-bottom));
+  background: #ffffff;
+  border-top: 1rpx solid #e5e7eb;
+  z-index: 102;
+}
+
+.cart-left {
+  display: flex;
+  align-items: center;
+}
+
+.cart-icon {
+  position: relative;
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 20rpx;
+  background: #f3f4f6;
+  border: 1rpx solid #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #9ca3af;
+}
+
+.cart-glyph {
+  font-size: 28rpx;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.cart-icon.has {
+  background: #2563eb;
+  border-color: #2563eb;
+  color: #ffffff;
+}
+
+.badge {
+  position: absolute;
+  top: -8rpx;
+  right: -8rpx;
+  min-width: 36rpx;
+  height: 36rpx;
+  border-radius: 999rpx;
+  background: #ef4444;
+  color: #ffffff;
+  font-size: 24rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 8rpx;
+}
+
+.cart-total {
+  margin-left: 24rpx;
+  font-size: 36rpx;
+  font-weight: 600;
+  color: #111827;
+}
+
+.cart-total-symbol {
+  font-size: 26rpx;
+  margin-right: 2rpx;
+}
+
+.cart-total.empty-text {
+  font-size: 26rpx;
+  font-weight: 400;
+  color: #9ca3af;
+}
+
+.checkout {
+  width: 220rpx;
+}
+
+/* 购物车弹层：抬升到购物车栏(高约120rpx+安全区)上方，避免最底部商品被遮挡 */
+.cart-popup {
+  padding-bottom: 0;
+  bottom: calc(120rpx + env(safe-area-inset-bottom));
+}
+
+.cart-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 20rpx;
+  border-bottom: 1rpx solid #f3f4f6;
+}
+
+.cart-title {
+  font-size: 30rpx;
+  font-weight: 600;
+}
+
+.cart-clean {
+  font-size: 26rpx;
+  color: #9ca3af;
+}
+
+.cart-list {
+  max-height: 50vh;
+}
+
+.cart-item {
+  display: flex;
+  align-items: center;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #f9fafb;
+}
+
+.cart-img {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 12rpx;
+  background: #f3f4f6;
+}
+
+.cart-info {
+  flex: 1;
+  margin-left: 16rpx;
+  min-width: 0;
+}
+
+.cart-name {
+  font-size: 28rpx;
+  color: #111827;
+}
+
+.cart-flavor {
+  font-size: 24rpx;
+  color: #9ca3af;
+}
+
+.cart-price {
+  margin-right: 20rpx;
+}
+
+/* 弹窗通用 */
+.popup-body {
+  flex: 1;
+  min-height: 200rpx;
+}
+
+.popup-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 24rpx;
+  border-top: 1rpx solid #f3f4f6;
+}
+
+.popup-price {
+  font-size: 40rpx;
+}
+
+.popup-btn {
+  width: 300rpx;
+}
+
+/* 规格 */
+.flavor-group {
+  margin-bottom: 24rpx;
+}
+
+.flavor-name {
+  font-size: 26rpx;
+  color: #4b5563;
+  margin-bottom: 16rpx;
+}
+
+.flavor-values {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16rpx;
+}
+
+.flavor-val {
+  padding: 10rpx 28rpx;
+  border-radius: 8rpx;
+  background: #f9fafb;
+  border: 1rpx solid #e5e7eb;
+  color: #4b5563;
+  font-size: 26rpx;
+}
+
+.flavor-val.selected {
+  background: #eff6ff;
+  color: #1d4ed8;
+  border-color: #dbeafe;
+}
+
+/* 套餐明细 */
+.setmeal-dish {
+  display: flex;
+  align-items: center;
+  padding: 16rpx 0;
+  border-bottom: 1rpx solid #f9fafb;
+}
+
+.setmeal-dish-img {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 12rpx;
+  background: #f3f4f6;
+}
+
+.setmeal-dish-info {
+  flex: 1;
+  margin-left: 16rpx;
+  min-width: 0;
+}

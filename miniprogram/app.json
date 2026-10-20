@@ -1,0 +1,21 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/order/list",
+    "pages/mine/mine",
+    "pages/login/login",
+    "pages/order/confirm",
+    "pages/order/detail",
+    "pages/address/list",
+    "pages/address/edit"
+  ],
+  "window": {
+    "navigationBarBackgroundColor": "#ffffff",
+    "navigationBarTitleText": "天空外卖",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#f3f4f6",
+    "backgroundTextStyle": "dark"
+  },
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}

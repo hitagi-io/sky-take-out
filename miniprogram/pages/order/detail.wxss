@@ -1,0 +1,159 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.content {
+  flex: 1;
+  padding: 24rpx;
+}
+
+.status-banner {
+  border-radius: 32rpx;
+  padding: 40rpx;
+  margin-bottom: 24rpx;
+  background: #ffffff;
+  border: 1rpx solid #e5e7eb;
+  box-shadow: 0 20rpx 60rpx rgba(15, 23, 42, 0.08);
+  color: #111827;
+}
+
+.status-banner.s1 {
+  background: #fffbeb;
+  border-color: #fde68a;
+}
+.status-banner.s1 .status-text { color: #b45309; }
+
+.status-banner.s2,
+.status-banner.s3,
+.status-banner.s4 {
+  background: #eff6ff;
+  border-color: #dbeafe;
+}
+.status-banner.s2 .status-text,
+.status-banner.s3 .status-text,
+.status-banner.s4 .status-text { color: #1d4ed8; }
+
+.status-banner.s5 {
+  background: #ecfdf5;
+  border-color: #a7f3d0;
+}
+.status-banner.s5 .status-text { color: #047857; }
+
+.status-banner.s6 {
+  background: #f9fafb;
+  border-color: #e5e7eb;
+}
+.status-banner.s6 .status-text { color: #6b7280; }
+
+.status-text {
+  font-size: 36rpx;
+  font-weight: 600;
+}
+
+.status-sub {
+  margin-top: 8rpx;
+  font-size: 26rpx;
+  color: #6b7280;
+}
+
+.card {
+  margin-bottom: 24rpx;
+}
+
+.card-title {
+  font-size: 30rpx;
+  font-weight: 600;
+  margin-bottom: 16rpx;
+}
+
+.info-row {
+  display: flex;
+  padding: 10rpx 0;
+  font-size: 26rpx;
+  color: #111827;
+}
+
+.info-label {
+  width: 150rpx;
+  color: #6b7280;
+  flex-shrink: 0;
+}
+
+.info-addr {
+  flex: 1;
+}
+
+.copy {
+  color: #2563eb;
+  font-size: 24rpx;
+  margin-left: 12rpx;
+}
+
+.goods-item {
+  display: flex;
+  align-items: center;
+  padding: 16rpx 0;
+}
+
+.goods-img {
+  width: 90rpx;
+  height: 90rpx;
+  border-radius: 12rpx;
+  background: #f3f4f6;
+}
+
+.goods-info {
+  flex: 1;
+  margin-left: 16rpx;
+  min-width: 0;
+}
+
+.goods-name {
+  font-size: 28rpx;
+}
+
+.goods-flavor {
+  font-size: 24rpx;
+}
+
+.goods-price {
+  margin-left: 24rpx;
+  width: 130rpx;
+  text-align: right;
+}
+
+.amount-row {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 20rpx;
+  font-size: 26rpx;
+}
+
+.amount-row.total {
+  border-top: 1rpx solid #f3f4f6;
+  margin-top: 20rpx;
+  align-items: center;
+}
+
+.total-price {
+  font-size: 36rpx;
+}
+
+.bottom-space {
+  height: 40rpx;
+}
+
+.footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 20rpx;
+  background: #ffffff;
+  padding: 20rpx 24rpx calc(20rpx + env(safe-area-inset-bottom));
+  border-top: 1rpx solid #e5e7eb;
+}
+
+.footer-btn {
+  padding: 20rpx 48rpx;
+}

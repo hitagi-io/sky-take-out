@@ -1,0 +1,61 @@
+.page {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48rpx;
+  overflow: hidden;
+  background: #f3f4f6;
+}
+
+/* 与商家端登录页一致的柔和光斑背景 */
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60rpx);
+}
+
+.orb-1 {
+  width: 420rpx;
+  height: 420rpx;
+  top: -140rpx;
+  left: -120rpx;
+  background: rgba(37, 99, 235, 0.22);
+}
+
+.orb-2 {
+  width: 360rpx;
+  height: 360rpx;
+  right: -100rpx;
+  bottom: -100rpx;
+  background: rgba(59, 130, 246, 0.16);
+}
+
+.login-card {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 64rpx 48rpx;
+}
+
+.title {
+  font-size: 48rpx;
+  font-weight: 600;
+  color: #111827;
+}
+
+.auth-btn {
+  width: 100%;
+  margin-top: 56rpx;
+}
+
+.cancel {
+  margin-top: 28rpx;
+  font-size: 26rpx;
+  color: #6b7280;
+  padding: 12rpx 32rpx;
+}
