@@ -27,6 +27,9 @@ public interface EmployeeService {
     //编辑员工信息
     void update(EmployeeDTO employeeDTO);
 
+    //删除员工（需先禁用，且不能删除当前登录账号）
+    void deleteById(Long id);
+
     //修改当前员工密码
     void editPassword(PasswordEditDTO passwordEditDTO);
 

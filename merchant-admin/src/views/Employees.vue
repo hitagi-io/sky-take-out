@@ -34,16 +34,29 @@
           </el-tag>
         </template>
       </el-table-column>
-      <el-table-column label="操作" width="200">
+      <el-table-column label="操作" width="240">
         <template #default="{ row }">
           <el-button type="text" @click="openEdit(row)">编辑</el-button>
+          <!-- 启用中只显示「禁用」；禁用后才显示「启用」和红色「删除」 -->
           <el-button
+            v-if="row.status === 1"
             type="text"
             :disabled="cannotToggle(row)"
             @click="toggleStatus(row)"
           >
-            {{ row.status === 1 ? "禁用" : "启用" }}
+            禁用
           </el-button>
+          <template v-else>
+            <el-button type="text" @click="toggleStatus(row)">启用</el-button>
+            <el-button
+              v-if="row.id !== auth.admin.id"
+              type="text"
+              style="color: var(--el-color-danger)"
+              @click="removeEmployee(row)"
+            >
+              删除
+            </el-button>
+          </template>
         </template>
       </el-table-column>
     </el-table>
@@ -113,7 +126,8 @@ import {
   fetchEmployees,
   createEmployee,
   updateEmployee,
-  changeEmployeeStatus
+  changeEmployeeStatus,
+  deleteEmployee
 } from "@/api/admin";
 import { showError } from "@/utils/error";
 
@@ -236,6 +250,27 @@ const toggleStatus = async (row: any) => {
   } catch (error: any) {
     if (error !== "cancel") {
       showError(error, "更新状态失败");
+    }
+  }
+};
+
+const removeEmployee = async (row: any) => {
+  try {
+    await ElMessageBox.confirm(
+      `确定要删除员工「${row.name}」吗？删除后不可恢复。`,
+      "提示",
+      { type: "warning" }
+    );
+    await deleteEmployee(row.id);
+    ElMessage.success("已删除");
+    // 当前页只剩这一条时回退一页，避免删完后停在空页
+    if (list.value.length === 1 && query.page > 1) {
+      query.page -= 1;
+    }
+    loadData();
+  } catch (error: any) {
+    if (error !== "cancel") {
+      showError(error, "删除失败");
     }
   }
 };

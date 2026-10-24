@@ -164,6 +164,11 @@ export function changeEmployeeStatus(status: number, id: number) {
   });
 }
 
+// 删除员工：DELETE /admin/employee?id=xx（需先禁用该员工）
+export function deleteEmployee(id: number) {
+  return http.delete("/admin/employee", { params: { id } });
+}
+
 // ========== 分类 ==========
 
 // 分类分页：GET /admin/category/page

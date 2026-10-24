@@ -3,6 +3,7 @@ package com.sky.mapper;
 import com.github.pagehelper.Page;
 import com.sky.dto.EmployeePageQueryDTO;
 import com.sky.entity.Employee;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -33,4 +34,8 @@ public interface EmployeeMapper {
     //统计除指定员工之外，仍处于启用状态的店长数量（role=1 店长，status=1 启用）
     @Select("select count(id) from employee where role = 1 and status = 1 and id <> #{id}")
     int countOtherEnabledManagers(Long id);
+
+    //根据id删除员工
+    @Delete("delete from employee where id = #{id}")
+    void deleteById(Long id);
 }

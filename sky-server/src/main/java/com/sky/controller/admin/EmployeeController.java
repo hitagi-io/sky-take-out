@@ -113,6 +113,14 @@ public class EmployeeController {
         return Result.success();
     }
 
+    //删除员工（需先禁用，且不能删除当前登录账号）
+    @DeleteMapping
+    public Result delete(Long id){
+        log.info("删除员工：{}", id);
+        employeeService.deleteById(id);
+        return Result.success();
+    }
+
     //修改当前登录员工密码
     @PutMapping("/editPassword")
     public Result<String> editPassword(@Valid @RequestBody PasswordEditDTO passwordEditDTO) {

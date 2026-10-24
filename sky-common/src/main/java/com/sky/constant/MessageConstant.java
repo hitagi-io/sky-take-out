@@ -50,6 +50,8 @@ public class MessageConstant {
     public static final String EMPLOYEE_SEX_IS_NULL = "性别不能为空";
     public static final String EMPLOYEE_ID_NUMBER_IS_NULL = "身份证号不能为空";
     public static final String EMPLOYEE_ID_IS_NULL = "员工id不能为空";
+    public static final String EMPLOYEE_NOT_DISABLED = "请先禁用该员工后再删除";
+    public static final String CANNOT_DELETE_CURRENT_EMPLOYEE = "不能删除当前登录账号";
     public static final String MANAGER_MUST_KEEP_ONE = "系统至少需要保留一名启用中的店长，请先指定其他店长再修改";
     public static final String ADDRESS_BOOK_NOT_FOUND = "地址不存在";
     public static final String REPORT_DATE_IS_NULL = "请选择开始日期和结束日期";

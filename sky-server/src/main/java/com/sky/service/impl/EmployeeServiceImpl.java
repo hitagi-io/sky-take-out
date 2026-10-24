@@ -293,6 +293,34 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
     }
 
+    //删除员工：必须先禁用（含其他店长），且不能删除当前登录账号
+    public void deleteById(Long id) {
+        //调用方漏传id时先挡住，避免后续查询与比较出现空指针
+        if (id == null) {
+            throw new BaseException(MessageConstant.EMPLOYEE_ID_IS_NULL);
+        }
+
+        //不允许删除当前登录的员工本人
+        if (id.equals(BaseContext.getCurrentId())) {
+            throw new BaseException(MessageConstant.CANNOT_DELETE_CURRENT_EMPLOYEE);
+        }
+
+        Employee employee = employeeMapper.getById(id);
+        if (employee == null) {
+            throw new AccountNotFoundException(MessageConstant.ACCOUNT_NOT_FOUND);
+        }
+
+        //删除前必须先禁用：启用中的账号不允许直接删除
+        if (!StatusConstant.DISABLE.equals(employee.getStatus())) {
+            throw new BaseException(MessageConstant.EMPLOYEE_NOT_DISABLED);
+        }
+
+        employeeMapper.deleteById(id);
+
+        //继续递增权限版本：即使该账号曾被直接改库禁用、未走过上面的禁用流程，其旧令牌也会立即失效
+        bumpAuthVersion(id);
+    }
+
     //修改当前员工密码
     public void editPassword(PasswordEditDTO passwordEditDTO) {
         Long currentId = BaseContext.getCurrentId();
